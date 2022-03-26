@@ -71,7 +71,7 @@ class Admin extends CI_Controller {
 	}
 	
 	
-	
+	//Exchange Rate for EURO TO RON
 	function get_exchange_ron_rate()
 	{
 		$this->load->config('exchage_api');
@@ -89,7 +89,7 @@ class Admin extends CI_Controller {
 
 		print_r($res); die;
 	}
-	
+	//Exchange Rate for EURO TO USD
 	function get_exchange_dollor_rate()
 	{
 		$this->load->config('exchage_api');
@@ -107,7 +107,7 @@ class Admin extends CI_Controller {
 
 		print_r($res); die;
 	}
-	
+	//Exchange TEST Rate for Currency
 	function exchange_data()
 	{
 		$this->load->config('exchage_api');
