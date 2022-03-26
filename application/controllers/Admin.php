@@ -32,6 +32,36 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/page_products',$data);
 	}
 	
+	public function edit_product()
+	{
+		    $status='';
+			$pr_id = $this->uri->segment(3);
+			$con = array('id'=>$pr_id);
+			$product =$this->admin_model->get_row_data('tbl_product',$con);
+				if($product['status'])
+				{
+					if($product['status']=='Active') 
+						$update['status'] = 'Inactive';
+					else
+						$update['status'] = 'Active';
+					$status = $this->admin_model->update_row_data('tbl_product',$con,$update);
+			
+					if($status)
+					{
+						$this->session->set_flashdata('message','<p style="color:green">Status Updated.</p>');
+					}
+					else{
+						$this->session->set_flashdata('message','<p style="color:red">Error in update status.</p>');
+					}
+				}	
+				else{
+						$this->session->set_flashdata('message','<p style="color:red">Invalid product.</p>');
+					}	
+		redirect(base_url('Admin/products'));
+				  
+	}
+	
+	
 	
 	
 }

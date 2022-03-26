@@ -21,12 +21,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="col-md-12">
 			<p><?php echo $this->session->flashdata('message'); ?></p>
 			<table class="table table-border">
-			  <thead><th>Id</th><th>Product Name</th><th>Description</th><th>Status</th></thead>
+			  <thead><th>Id</th><th>Product Name</th><th>Description</th><th>Status</th><th>Action</th></thead>
 			  <tbody>
 			 
 			  <?php  $tabs_data=''; if(!empty($products)){ 
+			  
 					foreach($products as $product){
-			    $tabs_data.='<tr><td>'.$product['Id'].'</td><td>'.$product['productName'].'</td><td> '.$product['productDes'].'</td><td>'.$product['productStatus'].'</td><tr>';
+						$edit_url=base_url().'Admin/edit_product/'.$product['Id'];
+			    $tabs_data.='<tr><td>'.$product['Id'].'</td><td>'.$product['productName'].'</td><td> '.$product['productDes'].'</td><td>'.$product['productStatus'].'</td><td><a href="'.$edit_url.'">Update status</a></td><tr>';
 			  
 			  } }else{  $tabs_data.='<tr><td colspan="4"> No record founds</td></tr>';}
 
