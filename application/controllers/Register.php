@@ -41,7 +41,7 @@ class Register extends CI_Controller {
 				{   
 				    $template['name'] = $post_data['first_name'];
 					$template['verify_link'] = base_url().'Verify/'.$post_data['email_verify_token'];
-					$fromEmail = 'quadrish.website@gmail.com';
+					$fromEmail = 'developer.quadrish@gmail.com';
 					$toEmail  = $post_data['email'];
 					$subject  = "Verification Email";
 					
@@ -66,8 +66,8 @@ class Register extends CI_Controller {
 								$config['protocol'] = 'smtp';
 								$config['smtp_host'] = 'smtp.gmail.com';
 								$config['smtp_port'] = '465';
-								$config['smtp_user'] = 'quadrish.website@gmail.com';
-								$config['smtp_pass'] = 'Common@123';
+								$config['smtp_user'] = 'developer.quadrish@gmail.com';
+								$config['smtp_pass'] = 'quadrish123456';
 								$config['charset'] = 'utf-8';
 								
 								$this->email->initialize($config);
