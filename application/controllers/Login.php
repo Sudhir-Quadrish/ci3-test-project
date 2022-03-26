@@ -7,6 +7,7 @@ class Login extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('General_model','general_model');
+		
 	}
 	
 	public function index()
@@ -16,7 +17,6 @@ class Login extends CI_Controller {
 	
 	
 	public function login_user(){
-		
 		
 		
 		$this->load->library('form_validation');

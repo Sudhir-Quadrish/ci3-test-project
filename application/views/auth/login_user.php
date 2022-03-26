@@ -87,10 +87,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id="container">
-	<h1>Register User</h1>
+	<h1>Login User</h1>
 
 	
-			<form name="login_form" action="login_user" id="<?php echo base_url(); ?>Login/login_form" method="post"  >
+			<form name="login_form" id="login_form" 
+			action="<?php echo base_url(); ?>Login/login_user" method="post"  >
 	          <p><?php echo $this->session->flashdata('message'); ?></p>
 				
 				<div class="col-md-12">

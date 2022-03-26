@@ -94,6 +94,7 @@ class Register extends CI_Controller {
 					echo json_encode(array('status'=>'success', 'data'=>$login_id, 'message'=>"Register user successfully.".$mail_msg)); die;
 					
 				}else{
+					$this->session->set_flashdata('message','<p style="color:red">Error in registration</p>');
 					echo json_encode(array('status'=>'error', 'data'=>"", 'message'=>"Error in registration")); die;
 				}
 			

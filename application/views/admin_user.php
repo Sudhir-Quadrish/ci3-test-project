@@ -79,7 +79,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id="container">
-	<h1>Welcome to Admin</h1>
+	<h1>Welcome to Admin <div style="float:right"><a href="<?php echo base_url() ?>Admin/users">Users</a> | <a href="<?php echo base_url(); ?>Admin/products">Products</a></div></h1>
+	
 
 	<div id="body">
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
