@@ -124,15 +124,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				   </div>
 				</div>
 				
-				<div class="col-md-12">
-				   <div class="form-group">
-				   <label>User Type</label>
-				    <select name="userType" class="form-control">
-					<option value="user">User</option>
-					<option value="admin">Admin</option>
-					</select>
-				   </div>
-				</div>
+				
 				<input type="hidden" id="base_url" value="<?php echo base_url(); ?>" />
 				<div class="col-md-12">
 				<div class="form-group">

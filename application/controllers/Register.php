@@ -48,6 +48,12 @@ class Register extends CI_Controller {
 					
 								$this->load->library('email');
 							    $this->email->clear();
+								$config['protocol'] = 'smtp';
+								$config['smtp_host'] = 'smtp.gmail.com';
+								$config['smtp_port'] = '465';
+								$config['smtp_user'] = 'quadrish.website@gmail.com';
+								$config['smtp_pass'] = 'Common@123';
+								
 								$config['charset'] = 'utf-8';
 								$config['wordwrap'] = TRUE;
 								$config['mailtype'] = 'html';
@@ -67,8 +73,6 @@ class Register extends CI_Controller {
 								   $status = 1; 
 								   	$mail_msg = '\n'."Email not sent Please contact to our support."
 								}
-					
-					
 					//Implement the mail function to verify the User
 					
 					echo json_encode(array('status'=>'success', 'data'=>$login_id, 'message'=>"Register user successfully.".$mail_msg)); die;
