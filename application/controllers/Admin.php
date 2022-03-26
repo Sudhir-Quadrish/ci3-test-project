@@ -16,7 +16,16 @@ class Admin extends CI_Controller {
 	
 	public function index()
 	{
-		$this->load->view('admin_user');
+		$user_data['user_data'] = $this->admin_model->get_user_count_stat();
+		
+		$user_data['product'] = $this->admin_model->get_product_count_stat();
+		
+		$user_data['users'] = $this->admin_model->get_user_product();
+		
+		
+		//print_r($user_data); die;
+		
+		$this->load->view('admin_user',$user_data);
 	}
 	
 	public function users()
@@ -63,5 +72,68 @@ class Admin extends CI_Controller {
 	
 	
 	
+	function get_exchange_ron_rate()
+	{
+		$this->load->config('exchage_api');
+		$this->load->helper('exchange_rate');
+		
+		
+		$access_key = $this->config->item('API_KEY');
+		
+		$endpoint = 'convert';
+		$from = 'EURO';
+		$to = 'UDS';
+		$amount = 10;
+		
+		$res = get_exchange_rate($endpoint, $from, $to,$amount, $access_key);
+
+		print_r($res); die;
+	}
 	
+	function get_exchange_dollor_rate()
+	{
+		$this->load->config('exchage_api');
+		$this->load->helper('exchange_rate');
+		
+		
+		$access_key = $this->config->item('API_KEY');
+		
+		$endpoint = 'convert';
+		$from = 'EURO';
+		$to = 'UDS';
+		$amount = 10;
+		
+		$res = get_exchange_rate($endpoint, $from, $to,$amount, $access_key);
+
+		print_r($res); die;
+	}
+	
+	function exchange_data()
+	{
+		$this->load->config('exchage_api');
+		
+		$access_key = $this->config->item('API_KEY');
+		// set API Endpoint, access key, required parameters
+		$endpoint = 'convert';
+		
+		$from = 'USD';
+		$to = 'EUR';
+		$amount = 10;
+
+		// initialize CURL:
+		$ch = curl_init('https://api.exchangeratesapi.io/v1/'.$endpoint.'?access_key='.$access_key.'&from='.$from.'&to='.$to.'&amount='.$amount.'');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// get the JSON data:
+		$json = curl_exec($ch);
+		print_r($json);
+		curl_close($ch);
+
+		// Decode JSON response:
+		$conversionResult = json_decode($json, true);
+
+		// access the conversion result
+		echo $conversionResult['result'];
+		
+	}
 }

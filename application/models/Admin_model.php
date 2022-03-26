@@ -79,25 +79,70 @@ class Admin_model extends CI_Model {
 		if($query->num_rows() > 0 ){
 			$res = $query->result_array();
 		}
+		return $res;
+		
+	}
+	public function get_user_count_stat(){
+		$res =array();
+		$this->db->select('(Select count(*) FROM tbl_login WHERE is_verified="1") as verified');
+		$this->db->select('(Select count(*) FROM tbl_login WHERE is_verified="0") as un_verified');
+		$this->db->select('(Select count(*) FROM tbl_user_products p  INNER JOIN  tbl_product tp ON tp.id=p.product_id INNER JOIN  tbl_login l ON p.user_id=l.id WHERE tp.status="Active" AND l.is_verified="1" ) as ap_user_product');
+		$this->db->from('tbl_login');
+		$query = $this->db->get();
+		if($query->num_rows() >0)
+		{
+			$res = $query->row_array();
+		
+		}
+		
+		return $res;
+
+	}
+	
+	public function get_product_count_stat(){
+		$res =array();
+		$this->db->select('(Select count(*) FROM tbl_product WHERE status="Active") as acitve_product');
+		
+		$this->db->select('(Select count(*) FROM tbl_product WHERE id NOT IN(Select product_id FROM tbl_user_products )) as not_attach_product');
+		
+		$this->db->select('(Select sum((product_count)) FROM tbl_user_products p INNER JOIN  tbl_product tp ON tp.id=p.product_id INNER JOIN  tbl_login l ON p.user_id=l.id WHERE tp.status="Active" AND l.is_verified="1") as attach_product_count');
+		
+		$this->db->select('(Select sum((product_price*product_count)) FROM tbl_user_products p INNER JOIN  tbl_product tp ON tp.id=p.product_id INNER JOIN  tbl_login l ON p.user_id=l.id WHERE tp.status="Active" AND l.is_verified="1") as total_amount');
+	
+		$this->db->from('tbl_product');
+		$query = $this->db->get();
+		if($query->num_rows() >0)
+		{
+			$res = $query->row_array();
+		
+		}
+		
+		return $res;
+
+	}
+	
+	
+	function get_user_product()
+	{ 
+		$res =array();
+	    $this->db->select('first_name as firstName, last_name as lastName');
+		
+		$this->db->select('(Select sum((product_price*product_count)) FROM tbl_user_products p INNER JOIN  tbl_product tp ON tp.id=p.product_id WHERE tp.status="Active" AND p.user_id=tbl_login.id) as total_amount');
+		
+		
+		$this->db->from('tbl_login');
+		$this->db->where('login_type','user');
+		$this->db->where('is_verified','1');
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0 ){
+			$res = $query->result_array();
+		}
 		
 		
 		return $res;
 		
 	}
-
-
-	function random_strings($length_of_string)
-{
- 
-    // String of all alphanumeric character
-    $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
- 
-    // Shuffle the $str_result and returns substring
-    // of specified length
-    return substr(str_shuffle($str_result),
-                       0, $length_of_string);
-}
-
 
 
 }

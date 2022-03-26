@@ -74,24 +74,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
 	}
+	
+	table, th, td {
+  border: 1px solid black;
+}
 	</style>
 </head>
 <body>
 
 <div id="container">
-	<h1>Welcome to Admin <div style="float:right"><a href="<?php echo base_url() ?>Admin/users">Users</a> | <a href="<?php echo base_url(); ?>Admin/products">Products</a></div></h1>
+	<h1>Welcome to Admin <div style="float:right"><a href="<?php echo base_url() ?>Admin/users">Users</a> | <a href="<?php echo base_url(); ?>Admin/products">Products</a> | <a href="<?php echo base_url(); ?>Admin/get_exchange_ron_rate">Convert RON</a> | <a href="<?php echo base_url(); ?>Admin/get_exchange_ron_rate">Convert USD</a></div></h1>
 	
 
 	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+	<h2>User Data</h2> 
+		 <table class="table table-bordered"><thead><th>Verified User</th><th>Un Verified User</th><th>Attached Product</th></thead>
+		 <tr><td><?php echo $user_data['verified']; ?></td><td><?php echo $user_data['un_verified']; ?></td><td><?php echo $user_data['ap_user_product']; ?></td></tr>
+		</table>
+	<h2>Product Data</h2> 
+		 <table class="table table-bordered"><thead><th>Active Product</th><th>Not Attached Product</th><th>Total Attach Product</th><th> Product Amount</th></thead>
+		 <tr><td><?php echo $product['acitve_product']; ?></td><td><?php echo $product['not_attach_product']; ?></td><td><?php echo $product['attach_product_count']; ?></td><td>$<?php echo number_format($product['total_amount'],2); ?></td></tr>
+		</table>
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="userguide3/">User Guide</a>.</p>
+<h2>User Product Data</h2> 
+		 <table class="table table-bordered" style="border 1px solid #000"><thead><th>User</th><th>Total Amount</th></thead>
+		 <?php if(isset($users) && !empty($users)){ 
+				foreach($users as $u_data){
+				?>
+		 <tr><td><?php echo $u_data['firstName'].' '.$u_data['lastName'] ; ?></td><td><?php echo number_format($u_data['total_amount'],2); ?></td></tr>
+		 <?php } } ?>
+		</table>			
+		
+		
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
