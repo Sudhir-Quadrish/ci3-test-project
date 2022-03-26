@@ -22,7 +22,7 @@ class Register extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstName','First Name','required|trim');
 		$this->form_validation->set_rules('lastName','Last Name','required|trim');
-		$this->form_validation->set_rules('userEmail','User Email','required|trim');
+		$this->form_validation->set_rules('userEmail','User Email','required|trim|is_unique[tbl_login.email]');
 		//$this->form_validation->set_rules('userType','User Role','required|trim');
 		$this->form_validation->set_rules('userPassword','Password','required|trim');
 		if($this->form_validation->run()==TRUE)
@@ -44,8 +44,23 @@ class Register extends CI_Controller {
 					$fromEmail = 'quadrish.website@gmail.com';
 					$toEmail  = $post_data['email'];
 					$subject  = "Verification Email";
-			        $mmesage = $this->load->view('verify_email',$template);
 					
+					 $mesage='<div id="container">
+						<h1>Welcome to Ci Project!</h1>
+
+						<div id="body">
+							<p>Hi, '.$template['name'].'</p>
+
+							<p>Please click on the following link to verify your account.</p>
+							
+							<p><a href="'.$template['verify_link'].'" >Click Here</a></p>
+							
+							<p>Contact for support</p>
+							<p><a href="test.support@test.com">test.support@test.com</a></p>
+							<p>Thanks</p>
+							</div>
+						</div>';
+			     
 								$this->load->library('email');
 							    $this->email->clear();
 								$config['protocol'] = 'smtp';
@@ -53,11 +68,11 @@ class Register extends CI_Controller {
 								$config['smtp_port'] = '465';
 								$config['smtp_user'] = 'quadrish.website@gmail.com';
 								$config['smtp_pass'] = 'Common@123';
-								
 								$config['charset'] = 'utf-8';
-								$config['wordwrap'] = TRUE;
-								$config['mailtype'] = 'html';
+								
 								$this->email->initialize($config);
+								$this->email->set_mailtype('html');
+								$this->email->set_newline($config);
 								$this->email->from($fromEmail);	
 								$this->email->to($toEmail);
 								$this->email->subject($subject);
@@ -66,12 +81,13 @@ class Register extends CI_Controller {
 								if($this->email->send())
 								{
 								    $status = 1; 
-									$mail_msg = '\n'."Verification link has sent at your mail."
+									$mail_msg = '\n'."Verification link has sent at your mail.";
 								}
 								else
 								{
-								   $status = 1; 
-								   	$mail_msg = '\n'."Email not sent Please contact to our support."
+									
+								   $status = 0; 
+								   	$mail_msg = '\n'."Email not sent Please contact to our support.";
 								}
 					//Implement the mail function to verify the User
 					
